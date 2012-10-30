@@ -13,8 +13,8 @@ PIPE="/tmp/ikmplayer-pipe.$$"
 #mknod $PIPE p
 mkfifo $PIPE
 
-mencoder "$@" -nosound -really-quiet -ovc copy -o $PIPE  2>/dev/null | cat
-$PIPE 2>/dev/null
+mencoder "$@" -really-quiet -oac copy -ovc copy -o $PIPE  2>/dev/null | cat $PIPE 2>/dev/null
+#mencoder "$@" -nosound -really-quiet -ovc copy -o $PIPE  2>/dev/null | cat $PIPE 2>/dev/null
 
 rm $PIPE
 #END SCRIPT
