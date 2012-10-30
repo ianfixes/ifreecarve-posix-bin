@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # mini-buildbot script
+#  monitors files for changes, then runs a command
 # by Ian Katz, 2012
 # ifreecarve@gmail.com
 # released under the WTFPL
