@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# by Ian Katz
+# generates bu-hubs as seen in sbemail70 with terminal colors 
+# (not perfect color-wise, due to limitations of console colors)
+
+
+echo ""
+
+echo -e "\e[0m \e[47m                         \e[0m "
+echo -e " \e[47m \e[0m                       \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m                     \e[0m \e[47m \e[0m "
+
+echo -e " \e[47m \e[0m \e[47m \e[0m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m       \e[46;34;1m██████\e[0m      \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m      \e[46;34;1m█      █\e[0m     \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m     \e[46;34;1m█ \e[47m  \e[46m     █\e[0m    \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m     \e[46;34;1m█ \e[0m \e[47m \e[46m  \e[0m \e[46;34;1m  █\e[0m    \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m     \e[46;34;1m█  \e[46m  \e[47;30;1m █ \e[46;34;1m █\e[0m    \e[47m \e[0m \e[47m \e[0m "
+
+echo -e " \e[47m \e[0m \e[47m \e[0m   \e[43m  \e[46;34;1m█ \e[47;30;1m█ █ █ \e[46;34;1m█\e[43m  \e[0m   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m  \e[43m    \e[47m \e[47;30;1m█ █ █ \e[43m    \e[0m  \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[0m \e[43m      \e[47;30;1m█ █ █\e[43m      \e[0m \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[43m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[42m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[42m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[42m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[42m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m                     \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m                       \e[47m \e[0m "
+echo -e "\e[0m \e[47m                         \e[0m "
+
+echo ""
+

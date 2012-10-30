@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# by Ian Katz
+# generates dacheese as seen in sbemail70 with terminal colors 
+# (not perfect color-wise, due to limitations of console colors)
+
+
+echo ""
+
+echo -e "\e[0m \e[47m                         \e[0m "
+echo -e " \e[47m \e[0m                       \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m                     \e[0m \e[47m \e[0m "
+
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                 \e[37;1m█ \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                  \e[37;1m█\e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[43m \e[41m \e[0m \e[41m     \e[43m     \e[41m   \e[37;1m█ \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[41m \e[0m \e[43;33;1m█     ████ \e[41m    \e[37;1m█\e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[0m \e[43;33;1m█\e[0m \e[43;33;1m███\e[0m \e[43;33;1m█\e[0m \e[43;33;1m██ \e[41m      \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[0m \e[43;33;1m████████ \e[41m     \e[0;43;30m██\e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m   \e[0m \e[43;33;1m███    \e[41m  \e[0m    \e[43;30m██\e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[43;33;1m ████████ \e[41m   \e[43;33;1m █ \e[41m \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[43;33;1m ██ ███ ██  \e[0m \e[43;33;1m██ \e[41m \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[0m \e[43;33;1m█\e[0m \e[43;33;1m ███████ █\e[0m \e[43;33;1m \e[41m  \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[43;33;1m █ ████████ \e[0m \e[43;33;1m \e[41m   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m  \e[43m \e[0m \e[43;33;1m ████████ \e[41m     \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[43m \e[0m \e[43;33;1m █████████ \e[41m     \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[0m \e[43;33;1m█\e[0m \e[43;33;1m████████ \e[41m      \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[43m \e[0m \e[43;33;1m█\e[0m \e[43;33;1m█    ██ \e[41m      \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m \e[43m     \e[41m    \e[43m    \e[41m     \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m \e[41m                   \e[47m \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m \e[47m                     \e[0m \e[47m \e[0m "
+echo -e " \e[47m \e[0m                       \e[47m \e[0m "
+echo -e "\e[0m \e[47m                         \e[0m "
+
+echo ""
+
