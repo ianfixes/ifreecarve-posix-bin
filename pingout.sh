@@ -28,9 +28,9 @@ while : ; do
 
   # get gateway... currently works on OSX or linux
   if netstat -nr | grep ^0.0.0.0 >/dev/null ; then # linux
-    AD_GW=$(netstat -nr | grep ^0.0.0.0 | awk '{print $2}')
+    AD_GW=$(netstat -nr | grep ^0.0.0.0 | awk '{print $2}' | head -n 1)
   elif netstat -nr |grep ^default >/dev/null ; then # OSX
-    AD_GW=$(netstat -nr | grep ^default | awk '{print $2}')
+    AD_GW=$(netstat -nr | grep ^default | awk '{print $2}' | head -n 1)
   else
     AD_GW=""
   fi
