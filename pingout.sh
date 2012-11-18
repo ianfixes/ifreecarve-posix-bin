@@ -13,6 +13,7 @@ W_GW=1    # gateway ping timeout
 W_ISP=2   # ISP ping timeout
 W_INET=3  # internet ping timeout
 P_INET=10 # pause between internet pings (if successful)
+P_ISP=2   # pause between ISP pings (if successful)
 
 # addresses
 AD_GW=""
@@ -26,61 +27,63 @@ while : ; do
   NOW=$(date +"%H:%M:%S") 
   echo -ne "PingOut: $NOW "
 
-  # get gateway... currently works on OSX or linux
-  if netstat -nr | grep ^0.0.0.0 >/dev/null ; then # linux
-    AD_GW=$(netstat -nr | grep ^0.0.0.0 | awk '{print $2}' | head -n 1)
-  elif netstat -nr |grep ^default >/dev/null ; then # OSX
-    AD_GW=$(netstat -nr | grep ^default | awk '{print $2}' | head -n 1)
+  # ping internet
+  if ping -q -c 1 -t $W_INET $AD_INET >/dev/null 2>/dev/null ; then
+    echo -ne "Internet "
+    sleep $P_INET
   else
-    AD_GW=""
-  fi
+    echo -ne "(No Internet) "
 
-  # check gateway
-  if [ -z "$AD_GW" ]; then
-    echo -ne "(No Gateway)"
-    sleep $W_GW
-  else
-
-    # ping gateway
-    ping -q -c 1 -t $W_GW $AD_GW >/dev/null
-    if [ ! $? ]; then
-      echo -ne "" # FAIL
+    # get ISP 
+    TR=$(traceroute -q 1 -w $W_GW -f 2 -m 2 $AD_INET 2>/dev/null)
+    if [ ! $? ] ; then
+      AD_ISP=""
     else
-      echo -ne "Gateway "
+      AD_ISP=$(echo "$TR" | grep " 2 " | awk '{print $2}')
+    fi
 
-      # get ISP 
-      TR=$(traceroute -q 1 -w $W_GW -f 2 -m 2 $AD_INET 2>/dev/null)
-      if [ ! $? ] ; then
-        AD_ISP=""
+    # check ISP
+    if [ -z "$AD_ISP" ] ; then 
+      echo -ne "(No ISP) "
+      DO_GW=""
+    elif  [ "*" = "$AD_ISP" ] ; then
+      echo -ne "(ISP FAIL) "
+      DO_GW=""
+    else
+      echo -ne "ISP "
+      DO_GW="NO"
+      sleep $P_ISP
+    fi
+
+    if [ -z $DO_GW ]; then
+
+      # get gateway... currently works on OSX or linux
+      if netstat -nr | grep ^0.0.0.0 >/dev/null ; then # linux
+        AD_GW=$(netstat -nr | grep ^0.0.0.0 | awk '{print $2}' | head -n 1)
+      elif netstat -nr |grep ^default >/dev/null ; then # OSX
+        AD_GW=$(netstat -nr | grep ^default | awk '{print $2}' | head -n 1)
       else
-        AD_ISP=$(echo "$TR" | grep " 2 " | awk '{print $2}')
+        AD_GW=""
       fi
 
-      # check ISP
-      if [ -z "$AD_ISP"  -o  "*" = "$AD_ISP" ] ; then
-        echo -ne "(No ISP) "
-        sleep $W_ISP
+      # check gateway
+      if [ -z "$AD_GW" ]; then
+        echo -ne "(No Gateway)"
+        sleep $W_GW
       else
-        # ping ISP
-        ping -q -c 1 -t $W_ISP $AD_ISP >/dev/null
-        if [ ! $? ]; then
-          #sleep $W_ISP
-          echo -ne "" # FAIL
-        else
-          echo -ne "ISP "
 
-          # ping internet
-          ping -q -c 1 -t $W_INET $AD_INET >/dev/null
-          if [ ! $? ]; then
-            echo -ne "" # FAIL
-          else
-            echo -ne "Internet"
-            sleep $P_INET
-          fi # pingged inet
-        fi # pingged isp
-      fi # got isp address
-    fi # pingged gw
-  fi # got gw address
+        # ping gateway
+        ping -q -c 1 -t $W_GW $AD_GW >/dev/null
+        if [ ! $? ]; then
+          echo -ne "(Gateway FAIL) " # FAIL
+        else
+          echo -ne "Gateway "
+        fi
+
+      fi # pingged gateway
+    fi # pingged isp
+  fi # pingged inet
+
 
   echo "" # newline
 
