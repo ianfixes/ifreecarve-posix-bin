@@ -13,16 +13,33 @@ import time
 import datetime
 import subprocess
 
-spinner = {
-    "|": "/",
-    "/": "-",
-    "-": "\\",
-    "\\": "|"
-    }
+spinner = "|/-\\"
+
 
 def print_usage():
-        print ("\nUsage: %s <cmd> <file1> [file2 [file3 [ ... ]]]\n" % 
-               os.path.basename(sys.argv[0]))
+    print ("\nUsage: %s <cmd> <file1> [file2 [file3 [ ... ]]]\n" % 
+           os.path.basename(sys.argv[0]))
+
+def notify(message, success):
+    if not hasattr(notify, "can_notify"):
+        notify.can_notify = True
+
+    if notify.can_notify:
+        try:
+            exe = os.path.basename(sys.argv[0])
+            if success:
+                status = "SUCCESS"
+            else:
+                status = "FAIL"
+            subprocess.call(["growlnotify", "-t", "%s -- %s" % (exe, status), "-m", message])
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                # handle file not found error.
+                notify.can_notify = False
+                print "Can't notify with growlnotify\n"
+            else:
+                # Something else went wrong
+                raise
 
 # update modification time dictionary and return list of changed files
 def update_mods(mods, files):
@@ -41,7 +58,8 @@ def monitor_files(shell_cmd, files):
     for f in files:
         mtimes[f] = os.stat(f).st_mtime
     
-    spin = "|"
+    spin = 0
+    buildnum = 0
 
     try:
         while True:
@@ -49,20 +67,22 @@ def monitor_files(shell_cmd, files):
             
             if 0 == len(changes):
                 sys.stdout.write("\r\x1b[K%s %s" % 
-                                 (spin, 
+                                 (spinner[spin], 
                                   str(datetime.datetime.now()).split(".")[0]))
             else:
-                sys.stdout.write("\nChanges detected:\n")
+                buildnum += 1
+                sys.stdout.write("\nStarting build #%d for these changes:\n" % buildnum)
                 for c in changes: sys.stdout.write("\t%s\n" % c)
                 sys.stdout.write("Running build command:\n $ %s\n" % shell_cmd)
                 p = subprocess.Popen(shell_cmd, shell=True, 
                                      executable=os.environ["SHELL"])
                 p.wait()
                 sys.stdout.write("\n")
+                notify("Build #%d complete" % buildnum, 0 == p.returncode)
 
             sys.stdout.flush() 
             time.sleep(.1)
-            spin = spinner[spin]
+            spin = (spin + 1) % len(spinner)
 
     except KeyboardInterrupt:
         print
