@@ -20,6 +20,41 @@ AD_GW=""
 AD_ISP=""
 AD_INET="4.2.2.2" # safe internet address to test.  Also, its a DNS server
 
+OS=$(uname)
+OS_X="Darwin"
+OS_LIN="Linux"
+      
+
+# cross-platform ping
+myping(){
+
+  local adr="$1"
+  local tmo="$2"
+
+  if [ "$OS_LIN" = "$OS" ] ; then
+    output_ping=$(ping -q -c 1 -w $tmo $adr >/dev/null 2>/dev/null)
+    result_ping=$?
+  elif [ "$OS_X" = "$OS" ] ; then
+    output_ping=$(ping -q -c 1 -t $tmo $adr >/dev/null 2>/dev/null)
+    result_ping=$?
+  fi
+
+}
+
+
+# cross-platform gateway grab
+getgateway(){
+
+  if [ "$OS_LIN" = "$OS" ] ; then
+    local route="0.0.0.0"
+  elif [ "$OS_X" = "$OS" ] ; then
+    local route="default"
+  fi
+
+  AD_GW=$(netstat -nr | grep ^$route | awk '{print $2}' | head -n 1)
+}
+
+
 # loop infinitely
 while : ; do
   
@@ -28,18 +63,20 @@ while : ; do
   echo -ne "PingOut: $NOW "
 
   # ping internet
-  if ping -q -c 1 -t $W_INET $AD_INET >/dev/null 2>/dev/null ; then
+  myping $AD_INET $W_INET
+  if [ 0 -eq "$result_ping" ] ; then
     echo -ne "Internet "
     sleep $P_INET
   else
     echo -ne "(No Internet) "
 
     # get ISP 
-    TR=$(traceroute -q 1 -w $W_GW -f 2 -m 2 $AD_INET 2>/dev/null)
+    TR=$(traceroute -q 1 -w $W_GW -f 2 -m 4 $AD_INET 2>/dev/null)
     if [ ! $? ] ; then
       AD_ISP=""
     else
-      AD_ISP=$(echo "$TR" | grep " 2 " | awk '{print $2}')
+      AD_ISP=$(echo "$TR" | grep "^ " | grep -v "*" | grep -v "!N")
+      AD_ISP=$(echo "$AD_ISP" | head -n 1 | awk '{print $2}')
     fi
 
     # check ISP
@@ -47,10 +84,10 @@ while : ; do
       echo -ne "(No ISP) "
       DO_GW=""
     elif  [ "*" = "$AD_ISP" ] ; then
-      echo -ne "(ISP FAIL) "
+      echo -ne "(ISP FAIL) -- $AD_ISP"
       DO_GW=""
     else
-      echo -ne "ISP "
+      echo -ne "ISP -- $AD_ISP"
       DO_GW="NO"
       sleep $P_ISP
     fi
@@ -79,7 +116,7 @@ while : ; do
         else
           echo -ne "Gateway "
         fi
-        echo -ne " -- $AD_GW"
+        echo -ne "-- $AD_GW"
 
       fi # pingged gateway
     fi # pingged isp
