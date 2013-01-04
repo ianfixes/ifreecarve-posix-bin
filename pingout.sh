@@ -79,6 +79,7 @@ while : ; do
         else
           echo -ne "Gateway "
         fi
+        echo -ne " -- $AD_GW"
 
       fi # pingged gateway
     fi # pingged isp
