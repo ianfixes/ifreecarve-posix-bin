@@ -13,7 +13,7 @@ import time
 import datetime
 import subprocess
 
-spinner = "|/-\\"
+spinners = ["|/-\\", ".,ooOO0@* ", "'!|Yv "] #, ">v<^"]
 
 
 def print_usage():
@@ -62,6 +62,7 @@ def monitor_files(shell_cmd, files):
     buildnum = 0
 
     try:
+        spinner = spinners[buildnum % len(spinners)]
         while True:
             mtimes, changes = update_mods(mtimes, files)
             
@@ -79,6 +80,7 @@ def monitor_files(shell_cmd, files):
                 p.wait()
                 sys.stdout.write("\n")
                 notify("Build #%d complete" % buildnum, 0 == p.returncode)
+                spinner = spinners[buildnum % len(spinners)]
 
             sys.stdout.flush() 
             time.sleep(.1)
