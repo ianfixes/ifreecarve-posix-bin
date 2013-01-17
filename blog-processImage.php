@@ -5,10 +5,10 @@ $credfile = "credentials-blog.php";
 
 include($credfile);
 
-if (!(isset($DESTINATION_DIR) && isset($DESTINATION_USER) && isset($DESTINATION_HOST)))
+if (!(isset($DESTINATION_WEBDIR) && isset($DESTINATION_DIR) && isset($DESTINATION_USER) && isset($DESTINATION_HOST)))
 {
     echo "ERROR: the following PHP variables must be defined in $credfile: \n";
-    echo " DESTINATION_USER\n DESTINATION_HOST\n DESTINATION_DIR\n";
+    echo " DESTINATION_USER\n DESTINATION_HOST\n DESTINATION_WEBDIR\n DESTINATION_DIR\n";
 
     die("\n");
 }
@@ -19,7 +19,7 @@ if (4 > count($argv))
     echo "Usage:\n";
     echo basename($argv[0]) . " <substring_find> <substring_replace> <file1> [[file2] [file3] ...]\n\n";
     echo "Copies all files to:\n";
-    echo "    $DESTINATION_USER@$DESTINATION_HOST:$DESTINATION_DIR\n\n";
+    echo "    $DESTINATION_USER@$DESTINATION_HOST:$DESTINATION_WEBDIR/$DESTINATION_DIR/\n\n";
 
     if (1 < count($argv))
     {
@@ -89,7 +89,7 @@ foreach ($arr as $myfile)
     //output
     $c = $DESTINATION_DIR;
     echo <<<ENDofHTML
-<div class="imgbar"><a href="$c$out_fullsize"><img src="$c$out_thmbsize" /></a></div>
+<div class="imgbar"><a href="/$c/$out_fullsize"><img src="/$c/$out_thmbsize" /></a></div>
 
 $out_fullsize
 
@@ -105,7 +105,9 @@ echo "<!-- end of output -->\n\n";
 $all_files_str = implode(" ", $all_files);
 
 //scp
-shell_exec("scp $all_files_str $DESTINATION_USER@$DESTINATION_HOST:$DESTINATION_DIR");
+$whattodo = "scp $all_files_str $DESTINATION_USER@$DESTINATION_HOST:$DESTINATION_WEBDIR/$DESTINATION_DIR/";
+//echo "DOING THIS:\n\n$whattodo\n\n";
+shell_exec($whattodo);
 //shell_exec("cp $all_files_str outdir/");
 
 //delete
