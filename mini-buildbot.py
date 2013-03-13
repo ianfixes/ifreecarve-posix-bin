@@ -6,7 +6,6 @@
 # ifreecarve@gmail.com
 # released under the WTFPL
 
-
 import sys
 import os
 import time
@@ -19,6 +18,24 @@ spinners = ["|/-\\", ".,ooOO0@* ", "'!|YVv "] #, ">v<^"]
 def print_usage():
     print ("\nUsage: %s <cmd> <file1> [file2 [file3 [ ... ]]]\n" % 
            os.path.basename(sys.argv[0]))
+
+def localhook_path():
+    return os.path.join(os.path.dirname(sys.argv[0]), "local-hook-mini-buildbot.sh")
+
+def localhook(buildnum, retcode):
+    if not hasattr(localhook, "can_localhook"):
+        localhook.can_localhook = True
+
+
+    if localhook.can_localhook:
+        try:
+            subprocess.call([localhook_path(), "%d" % buildnum, "%d" % retcode])
+        except OSError as e:
+            if e.errno == os.errno.ENOENT:
+                localhook.can_localhook = False
+                print "Can't find local hook at %s" % localhook_path()
+            else:
+                raise
 
 def notify(message, success):
     if not hasattr(notify, "can_notify"):
@@ -81,6 +98,7 @@ def monitor_files(shell_cmd, files):
                                      executable=os.environ["SHELL"])
                 p.wait()
                 sys.stdout.write("\n")
+                localhook(buildnum, p.returncode)
                 notify("Build #%d complete" % buildnum, 0 == p.returncode)
                 spinner = spinners[buildnum % len(spinners)]
 
