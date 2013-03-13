@@ -13,7 +13,7 @@ import time
 import datetime
 import subprocess
 
-spinners = ["|/-\\", ".,ooOO0@* ", "'!|Yv "] #, ">v<^"]
+spinners = ["|/-\\", ".,ooOO0@* ", "'!|YVv "] #, ">v<^"]
 
 
 def print_usage():
@@ -55,9 +55,11 @@ def update_mods(mods, files):
 #main loop
 def monitor_files(shell_cmd, files):
     mtimes = {}
-    for f in files:
-        mtimes[f] = os.stat(f).st_mtime
-    
+    #for f in files:
+    #    mtimes[f] = os.stat(f).st_mtime
+    #    mtimes[f] = 0
+    mtimes = dict([(f, 0) for f in files])
+ 
     spin = 0
     buildnum = 0
 
