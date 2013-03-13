@@ -3,7 +3,7 @@
 
 $credfile = "credentials-blog.php";
 
-include($credfile);
+@include($credfile);
 
 if (!(isset($DESTINATION_WEBDIR) && isset($DESTINATION_DIR) && isset($DESTINATION_USER) && isset($DESTINATION_HOST)))
 {
