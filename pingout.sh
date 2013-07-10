@@ -75,7 +75,7 @@ while : ; do
     if [ ! $? ] ; then
       AD_ISP=""
     else
-      AD_ISP=$(echo "$TR" | grep "^ " | grep -v "*" | grep -v "!N")
+      AD_ISP=$(echo "$TR" | grep "^ " | grep -v "*" | grep -v "!N" | grep -v "raceroute" )
       AD_ISP=$(echo "$AD_ISP" | head -n 1 | awk '{print $2}')
     fi
 
@@ -110,7 +110,7 @@ while : ; do
       else
 
         # ping gateway
-        ping -q -c 1 -t $W_GW $AD_GW >/dev/null
+        ping -q -c 1 -t $W_GW $AD_GW >/dev/null 2>/dev/null
         if [ ! $? ]; then
           echo -ne "(Gateway FAIL) " # FAIL
         else
