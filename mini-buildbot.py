@@ -98,8 +98,8 @@ def monitor_files(shell_cmd, files):
                                      executable=os.environ["SHELL"])
                 p.wait()
                 sys.stdout.write("\n")
-                localhook(buildnum, p.returncode)
                 notify("Build #%d complete" % buildnum, 0 == p.returncode)
+                localhook(buildnum, p.returncode)
                 spinner = spinners[buildnum % len(spinners)]
 
             sys.stdout.flush() 
