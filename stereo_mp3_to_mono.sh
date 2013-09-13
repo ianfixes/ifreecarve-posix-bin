@@ -1,25 +1,22 @@
 #!/bin/bash
 #
-# via http://superuser.com/a/566023/253931
+# Usage: (this script) stereo-input.mp3 mono-output.mp3
+#
+# concept via http://superuser.com/a/566023/253931
+#
 
-mp3file=$@
+bitrate=`file "$1" | sed 's/.*, \(.*\)kbps.*/\1/'`
+BR='-V9'
+if [ $bitrate -gt  75 ]; then BR='-V8'; fi
+if [ $bitrate -gt  90 ]; then BR='-V7'; fi
+if [ $bitrate -gt 105 ]; then BR='-V6'; fi
+if [ $bitrate -gt 120 ]; then BR='-V5'; fi
+if [ $bitrate -gt 145 ]; then BR='-V4'; fi
+if [ $bitrate -gt 170 ]; then BR='-V3'; fi
+if [ $bitrate -gt 180 ]; then BR='-V2'; fi
+if [ $bitrate -gt 215 ]; then BR='-V1'; fi
+if [ $bitrate -gt 230 ]; then BR='-V0'; fi
+if [ $bitrate -gt 280 ]; then BR='-b320'; fi
 
-mp3size () {
-    du -sk "$1" | awk '{print $1 * 8 }'
-}
-mp3length () {
-    id3info "$1" | \
-        awk '/=== TLEN/ { if ($NF > 0) { len=int( $NF/1000) }} END {print len}'
-}
-mp3rate () {
-    echo $(( `mp3size "$1"` / `mp3length "$1"` ))
-}
-
-bitrate=`mp3rate "$mp3file"`
-if [ $bitrate -gt 155 ]; then VBR='-V4'; fi
-if [ $bitrate -gt 190 ]; then VBR='-V2'; fi
-if [ $bitrate -gt 249 ]; then VBR='-V0'; fi
-
-echo downsampling $mp3file
-lame --silent $VBR -m m --mp3input "$mp3file" \
-      "$(basename "$mp3file" .mp3 )-mono.mp3"
+echo "mono-izing file with detected bitrate '$bitrate': $mp3file"
+lame --silent $BR -m m --mp3input "$1" "$2"
