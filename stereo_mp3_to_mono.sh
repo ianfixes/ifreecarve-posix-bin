@@ -5,6 +5,25 @@
 # concept via http://superuser.com/a/566023/253931
 #
 
+
+# usage function to display help for the hapless user
+usage ()
+{
+     mycmd=`basename $0`
+     echo "$mycmd"
+     echo "usage: $mycmd inputfile outputfile"
+     echo "Extracts audio from inputfile, saves as mono mp3 format in outputfile"
+}
+
+# test if we have an arguments on the command line
+if [ $# != 2 ]
+then
+    usage
+    exit
+fi
+
+
+
 OS=$(uname)
 OS_X="Darwin"
 OS_LIN="Linux"
