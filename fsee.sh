@@ -1,3 +1,4 @@
 #!/bin/sh
-find "$@" -type f |sort > /tmp/play.list
+DIRNAME=`readlink -f "$@"`
+find "$DIRNAME" -type f |sort > /tmp/play.list
 mplayer -playlist /tmp/play.list
