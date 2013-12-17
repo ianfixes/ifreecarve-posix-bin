@@ -14,6 +14,7 @@ import subprocess
 
 spinners = ["|/-\\", ".,ooOO0@* ", "'!|YVv "] #, ">v<^"]
 
+failures = {}
 
 def print_usage():
     print ("\nUsage: %s <cmd> <file1> [file2 [file3 [ ... ]]]\n" % 
@@ -63,10 +64,16 @@ def update_mods(mods, files):
     changed_files = []
     ret = {}
     for f in files:
-        s = os.stat(f).st_mtime
-        if s != mods[f]: 
-            changed_files.append(f)
-        ret[f] = s
+        try:
+            s = os.stat(f).st_mtime
+            failures[f] = 0
+            if s != mods[f]: 
+                changed_files.append(f)
+            ret[f] = s
+        except OSError:
+            failures[f] += 1
+            if 3 < failures[f]: raise 
+
     return ret, changed_files
 
 #main loop
@@ -117,5 +124,6 @@ if __name__ == "__main__":
         
     shell_cmd = sys.argv[1]
     files = sys.argv[2:]
+    failures = dict([(f, 0) for f in files])
     monitor_files(shell_cmd, files)
 
