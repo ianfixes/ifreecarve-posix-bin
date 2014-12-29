@@ -27,6 +27,6 @@ git init .
 git config remote.origin.url "$REPO"
 #git fetch
 #git fetch --tags --progress "$REPO" +refs/heads/*:refs/remotes/origin/*
-git fetch -q --tags --progress "$REPO" +refs/pull/*:refs/remotes/origin/pr/*
+git fetch -q --tags "$REPO" +refs/pull/*:refs/remotes/origin/pr/*
 HEAD=$(git rev-parse origin/pr/$PR/merge^{commit})
 git checkout -q -f $HEAD
