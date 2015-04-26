@@ -38,7 +38,7 @@ def get_char():
 
 def handle_image(f):
     print "handling image", f
-    subprocess.call(["xview", f])
+    subprocess.call(["xview", "-shrink", f])
 
 def handle_gif_animation(f):
     print "handling gif animation", f
@@ -78,8 +78,8 @@ def pick_n_place(destination_dirs, source_files):
     # short names
     dnames = map(os.path.basename, destination_dirs)
 
-    for s in source_files:
-        print "Deciding what to do with", s
+    for i, s in enumerate(source_files):
+        print i, "of", len(source_files), "Deciding what to do with", s
         handle_file(s) # view the file
 
         while True:
