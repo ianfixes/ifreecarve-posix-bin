@@ -89,7 +89,7 @@ foreach ($arr as $myfile)
     //output
     $c = $DESTINATION_DIR;
     echo <<<ENDofHTML
-<div class="imgbar"><a href="/$c/$out_fullsize"><img src="/$c/$out_thmbsize" /></a></div>
+<div class="imgbar"><a href="/$c/$out_fullsize"><img src="/$c/$out_thmbsize" alt="" /></a></div>
 
 $out_fullsize
 
