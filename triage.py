@@ -143,13 +143,17 @@ if __name__ == "__main__":
         exit(1)
 
     if not all(map(os.path.isdir, destinations)):
-        print "One of these destinations is not a directory:"
-        print destinations
+        print "These destinations are not a directories:"
+        print filter(lambda x: not os.path.isdir(x), destinations)
         exit(1)
 
-    if not all(map(os.path.isfile, sources)):
-        print "One of these sources is not a file:"
-        print sources
+    files_are_dirs = [(f, os.path.isdir(f)) for f in sources]
+    just_files_are_files = filter(lambda (k, v): (not v), files_are_dirs)
+    files_that_are_not_dirs = map(lambda x: x[0], just_files_are_files)
+
+    if not all(map(os.path.isfile, files_that_are_not_dirs)):
+        print "These sources are not files:"
+        print filter(lambda x: not os.path.isfile(x), sources)
         exit(1)
         
-    pick_n_place(destinations, sources)
+    pick_n_place(destinations, files_that_are_not_dirs)
