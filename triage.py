@@ -61,7 +61,7 @@ def handle_file(f):
         handle_image(f)
     elif ext in ["WEBM"]:
         handle_webm(f)
-    elif ext in ["MOV", "AVI", "MKV", "MPG", "MPEG", "XVID"]:
+    elif ext in ["MOV", "AVI", "MKV", "MPG", "MPEG", "XVID", "WMV", "MP4"]:
         handle_movie(f)
     elif ext == "GIF":
         if is_animated(f):
