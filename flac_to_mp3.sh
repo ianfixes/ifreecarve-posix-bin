@@ -26,7 +26,7 @@ METAFLAC="$(which metaflac)"
 LAME="$(which lame)"
 
 # Options to pass to lame during encoding
-LAME_OPTS="--vbr-new -V 4 -h --nohist -b 192"
+LAME_OPTS="--vbr-new -V 1 --nohist -b 192"
 
 # Multiple instances of this running on the same output-dir will be more
 # reliable with locking available.
@@ -64,7 +64,8 @@ fi
 
 # Were we called correctly?
 if [ -z "$1" -o -z "$2" ]; then
-  echo "Usage: flac2mp3 <input-dir> <output-dir>" >&2
+  ME=$(basename "$0")
+  echo "Usage: $ME <input-dir> <output-dir>" >&2
   exit 1
 fi
 
