@@ -154,6 +154,7 @@ if __name__ == "__main__":
     if not all(map(os.path.isfile, files_that_are_not_dirs)):
         print "These sources are not files:"
         print filter(lambda x: not os.path.isfile(x), sources)
-        exit(1)
+        files_that_are_not_dirs = filter(lambda x: os.path.isfile(x), sources)
+        #exit(1)
         
     pick_n_place(destinations, files_that_are_not_dirs)
