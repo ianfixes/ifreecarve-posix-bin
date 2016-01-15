@@ -43,6 +43,7 @@ def handle_image(f):
 def handle_gif_animation(f):
     print "handling gif animation", f
     #subprocess.call(["animate", f])
+    #subprocess.call(["mplayer", f, "-loop", "0"])
     subprocess.call(["gifview", "-a", "--fallback-delay", "10", f])
 
 def handle_webm(f):
@@ -50,7 +51,7 @@ def handle_webm(f):
 
 def handle_movie(f):
     print "handling movie", f
-    subprocess.call(["mplayer", f])
+    subprocess.call(["mplayer", "-fs", f])
 
 
 def handle_file(f):
@@ -74,6 +75,7 @@ def handle_file(f):
 
 def pick_n_place(destination_dirs, source_files):
     time_to_go = False
+    undo_mv = None
 
     # short names
     dnames = map(os.path.basename, destination_dirs)
@@ -86,7 +88,10 @@ def pick_n_place(destination_dirs, source_files):
             print
 
             print "s) skip this file for now"
-            print "l) look at it again"
+            print "l) look at it again / repeat"
+            print "r) look at it again / repeat"
+            print "u) undo the last move"
+
             # 1-index the directories
             for i, d in enumerate(dnames):
                 print str((i + 1) % 10) + ") move file to", d + "/"
@@ -95,7 +100,10 @@ def pick_n_place(destination_dirs, source_files):
             
             if "s" == c:
                 break
-            elif "l" == c:
+            elif "u" == c:
+                if not undo_mv is None:
+                    shutil.move(undo_mv[0], undo_mv[1])
+            elif c in ["l", "r"]:
                 handle_file(s) # view the file
             elif 3 == ord(c): 
                 time_to_go = True
@@ -112,6 +120,14 @@ def pick_n_place(destination_dirs, source_files):
                         print "move", s, "to", dest
                         try:
                             shutil.move(s, dest)
+                            try:
+                                # compute origin dir and destination path
+                                parts = os.path.split(s)
+                                moved_to = os.path.join(dest, parts[1])
+                                moved_from = parts[0]
+                                undo_mv = [moved_to, moved_from]
+                            except:
+                                pass
                             break
                         except Exception as e:
                             print e
