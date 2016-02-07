@@ -29,7 +29,7 @@ fi
 cd /var/cache/apt/archives
 
 # get list of debs
-apt-get -y --print-uris $@ > /tmp/debs.list
+apt-get install -y --print-uris $@ > /tmp/debs.list
 
 # download them
 egrep -o -e "http://[^\']+" /tmp/debs.list | xargs -i{} -l3 -P5 wget -nv
