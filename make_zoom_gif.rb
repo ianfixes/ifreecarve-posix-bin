@@ -95,6 +95,7 @@ class Zoomer
     # render all the frames individually, save their names for later
     frames = []
     (0...n_frames).each do |i|
+      puts "Rendering frame #{i + 1} of #{n_frames}"
       num = format("%04d", i)
       name = File.join(dir, "frame#{num}.png")
       hiscale = root ** i  # in other words (1 * (root ** i))
