@@ -5,7 +5,6 @@ import tty
 import termios
 import os
 import shutil
-import Image
 import subprocess
 
 def usage():
@@ -13,16 +12,6 @@ def usage():
     print
     print "Helps sort a set of files into a set of directories based on user interaction"
     print
-
-
-def is_animated(gif_path):
-    gif = Image.open(gif_path)
-    try:
-        gif.seek(1)
-    except EOFError:
-        return False
-    else:
-        return True
 
 
 def get_char():
@@ -36,41 +25,13 @@ def get_char():
         return ch
 
 
-def handle_image(f):
-    print "handling image", f
-    subprocess.call(["xview", "-shrink", f])
-
-def handle_gif_animation(f):
-    print "handling gif animation", f
-    #subprocess.call(["animate", f])
-    #subprocess.call(["mplayer", f, "-loop", "0"])
-    subprocess.call(["gifview", "-a", "--fallback-delay", "10", f])
-
-def handle_webm(f):
-    handle_movie(f)
-
-def handle_movie(f):
-    print "handling movie", f
-    subprocess.call(["mplayer", "-fs", f])
-
 
 def handle_file(f):
-    _, e = os.path.splitext(f)
-    ext = e.upper()[1:]
-
-    if ext in ["JPG", "JPEG", "PNG"]:
-        handle_image(f)
-    elif ext in ["WEBM"]:
-        handle_webm(f)
-    elif ext in ["MOV", "AVI", "MKV", "MPG", "MPEG", "XVID", "WMV", "MP4", "FLV"]:
-        handle_movie(f)
-    elif ext == "GIF":
-        if is_animated(f):
-            handle_gif_animation(f)
-        else:
-            handle_image(f)
-    else:
-        print "I DON'T KNOW HOW TO OPEN", f
+    try:
+        subprocess.call(["preview.py", f])
+    except OSError:
+        print "Failed to execute shell command:", args
+        exit(1)
 
 
 def pick_n_place(destination_dirs, source_files):
@@ -97,7 +58,7 @@ def pick_n_place(destination_dirs, source_files):
                 print str((i + 1) % 10) + ") move file to", d + "/"
 
             c = get_char()
-            
+
             if "s" == c:
                 break
             elif "u" == c:
@@ -105,7 +66,7 @@ def pick_n_place(destination_dirs, source_files):
                     shutil.move(undo_mv[0], undo_mv[1])
             elif c in ["l", "r"]:
                 handle_file(s) # view the file
-            elif 3 == ord(c): 
+            elif 3 == ord(c):
                 time_to_go = True
                 break
             else:
@@ -172,5 +133,5 @@ if __name__ == "__main__":
         print filter(lambda x: not os.path.isfile(x), sources)
         files_that_are_not_dirs = filter(lambda x: os.path.isfile(x), sources)
         #exit(1)
-        
+
     pick_n_place(destinations, files_that_are_not_dirs)
