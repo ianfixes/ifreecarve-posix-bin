@@ -13,8 +13,8 @@ def usage():
 
 
 def is_animated(gif_path):
-    gif = Image.open(gif_path)
     try:
+        gif = Image.open(gif_path)
         gif.seek(1)
     except EOFError:
         return False
@@ -54,7 +54,9 @@ def handle_file(f):
         handle_image(f)
     elif ext in ["WEBM"]:
         handle_webm(f)
-    elif ext in ["MOV", "AVI", "MKV", "MPG", "MPEG", "XVID", "WMV", "MP4", "FLV"]:
+    elif ext in ["MOV", "AVI", "MKV", "MPG", "MPEG", "XVID", "WMV", "MP4", "FLV", "DV"]:
+        handle_movie(f)
+    elif ext in ["MP3", "WMA", "AC3", "FLAC", "WAV", "AIFF"]:
         handle_movie(f)
     elif ext == "GIF":
         if is_animated(f):
