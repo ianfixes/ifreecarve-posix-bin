@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# NOTE: this goes much better with
+# git config --global rebase.abbreviatecommands true
+
 # usage function to display help for the hapless user
 usage ()
 {
