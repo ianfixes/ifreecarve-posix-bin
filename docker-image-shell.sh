@@ -16,4 +16,4 @@ then
     exit
 fi
 
-docker run --rm -it -v "${PWD}:/app" -u root -w /app $@
+docker run --rm -it -v "${PWD}:/app" -u root -w /app "$@"
