@@ -1,25 +1,30 @@
-// Place your settings in this file to overwrite the default settings
 {
-    "editor.fontSize": 14,
-    "editor.tabSize": 2,
-    "files.autoSave": "onFocusChange",
-    "editor.fontFamily": "Consolas, Menlo, Monaco, 'Courier New', monospace",
-    "editor.wrappingColumn": 132,
-    "editor.wrappingIndent": "indent",
-    "editor.formatOnType": true,
-    "editor.acceptSuggestionOnEnter": false,
-    "workbench.editor.openPositioning": "last",
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
-    "editor.tabCompletion": true,
-    "editor.autoClosingBrackets": false,
-    "editor.wordWrap": true,
-    "editor.emptySelectionClipboard": false,
-
-    "window.zoomLevel": 0,
-    "editor.multiCursorModifier": "alt",
-    "C_Cpp.intelliSenseEngineFallback": "Disabled",
-
-    "php.suggest.basic": false,
-    "breadcrumbs.enabled": true
+  "editor.autoClosingBrackets": "never",
+  "editor.autoClosingQuotes": "never",
+  "files.autoSave": "onFocusChange",
+  "files.trimFinalNewlines": true,
+  "editor.tabSize": 2,
+  "ruby.rubocop.useBundler": true,
+  "editor.autoSurround": "never",
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.emptySelectionClipboard": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.detectIndentation": false,
+  "editor.autoIndent": "keep",
+  "editor.fontSize": 16,
+  "files.associations": {
+    "*.groovy": "groovy"
+  },
+  "terminal.integrated.scrollback": 10000,
+  "explorer.confirmDragAndDrop": false,
+  "gitlens.blame.avatars": false,
+  "ruby.pathToBundler": "/Users/ikatz/.rbenv/shims/bundle",
+  "ruby.useBundler": true,
+  "ruby.rubocop.executePath": "/Users/ikatz/.rbenv/shims/bundle exec ",
+  "ruby.useLanguageServer": true,
+  "files.trimTrailingWhitespace": true,
+  "explorer.confirmDelete": false,
+  "gitlens.codeLens.enabled": false,
+  "window.zoomLevel": -1,
+  "files.insertFinalNewline": true
 }
