@@ -2,6 +2,8 @@
   "editor.autoClosingBrackets": "never",
   "editor.autoClosingQuotes": "never",
   "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "editor.tabSize": 2,
   "ruby.rubocop.useBundler": true,
@@ -16,15 +18,20 @@
     "*.groovy": "groovy"
   },
   "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.fontSize": 16,
   "explorer.confirmDragAndDrop": false,
   "gitlens.blame.avatars": false,
   "ruby.pathToBundler": "/Users/ikatz/.rbenv/shims/bundle",
   "ruby.useBundler": true,
   "ruby.rubocop.executePath": "/Users/ikatz/.rbenv/shims/bundle exec ",
   "ruby.useLanguageServer": true,
-  "files.trimTrailingWhitespace": true,
   "explorer.confirmDelete": false,
   "gitlens.codeLens.enabled": false,
   "window.zoomLevel": -1,
-  "files.insertFinalNewline": true
+  "workbench.startupEditor": "none",
+  "redhat.telemetry.enabled": false,
+  "go.lintTool": "golangci-lint",
+  "[go]": {
+    "editor.formatOnSave": true
+  },
 }
