@@ -16,4 +16,5 @@ then
     exit
 fi
 
-docker run --rm -it -v "${PWD}:/app" -u root -w /app "$@"
+echo docker run --rm -it -v "${PWD}:/app" -u root -w /app "$@"
+docker run --rm -it -v "${PWD}:/app" -v /var/run/docker.sock:/var/run/docker.sock -u root -w /app "$@"
