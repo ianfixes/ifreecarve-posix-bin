@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # mini-buildbot script
 #  monitors files for changes, then runs a command
@@ -8,6 +8,7 @@
 
 import sys
 import os
+import errno
 import time
 import datetime
 import subprocess
@@ -32,9 +33,9 @@ def localhook(buildnum, retcode):
         try:
             subprocess.call([localhook_path(), "%d" % buildnum, "%d" % retcode])
         except OSError as e:
-            if e.errno == os.errno.ENOENT:
+            if e.errno == errno.ENOENT:
                 localhook.can_localhook = False
-                print "Can't find local hook at %s" % localhook_path()
+                print (f"Can't find local hook at {localhook_path()}")
             else:
                 raise
 
@@ -51,10 +52,10 @@ def notify(message, success):
                 status = "FAIL"
             subprocess.call(["growlnotify", "-t", "%s -- %s" % (exe, status), "-m", message])
         except OSError as e:
-            if e.errno == os.errno.ENOENT:
+            if e.errno == errno.ENOENT:
                 # handle file not found error.
                 notify.can_notify = False
-                print "Can't notify with growlnotify\n"
+                print("Can't notify with growlnotify\n")
             else:
                 # Something else went wrong
                 raise
@@ -114,7 +115,7 @@ def monitor_files(shell_cmd, files):
             spin = (spin + 1) % len(spinner)
 
     except KeyboardInterrupt:
-        print
+        print()
         return
 
 if __name__ == "__main__":
